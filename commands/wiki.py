@@ -8,5 +8,9 @@ async def wiki(client, message):
         await client.send_message(message.channel, "Error Connecting to Wiki")
         return
 
-    result = r.text.split('<li class="result">')[1].split('href="')[1].split('"')[0]
+    try:
+        result = r.text.split('<li class="result">')[1].split('href="')[1].split('"')[0]
+    except Exception:
+        await client.send_message(message.channel, "Error With Query")
+        return
     await client.send_message(message.channel, "*Results Will Be Weird Until Wiki is Finished* \n" + result)
