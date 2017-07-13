@@ -13,4 +13,5 @@ async def wiki(client, message):
     except Exception:
         await client.send_message(message.channel, "Error With Query")
         return
+
     await client.send_message(message.channel, "*Results Will Be Weird Until Wiki is Finished* \n" + result)
