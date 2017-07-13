@@ -10,7 +10,7 @@ https://github.com/reznok/AlbiBot
 
 
 
-AlbiBot by Reznok#1688 (Discord)
+AlbiBot
 ----------------------------------------------------
 !utc                    | Display UTC Time
 !wiki <search>          | Get Wiki Page For an Item
