@@ -12,6 +12,6 @@ https://github.com/reznok/AlbiBot
 
 AlbiBot
 ----------------------------------------------------
-!utc                    | Display UTC Time
-!wiki <search>          | Get Wiki Page For an Item
+!utc                    | Display UTC Time <br />
+!wiki <search>          | Get Wiki Page For an Item <br />
 !about                  | About AlbiBot
