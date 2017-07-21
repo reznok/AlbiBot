@@ -5,6 +5,7 @@ import json
 from commands.utc import utc
 from commands.wiki import wiki
 from CraftBot.commands.shop import *
+from CraftBot.commands.craft import *
 
 BOT_ABOUT = """
 ```
@@ -27,18 +28,25 @@ AlbiBot by Reznok#1688 (Discord)
 
 For Crafters
 ----------------------------------------------------
-!shop                   | Lists your shop
-!shopitems              | List all items you can add to your shop
-!shopadd <item>         | Add an item you can craft
-!shopremove <item>      | Remove an item from shop
-!shoplocation <city>    | Set what city you are based out of
-!online                 | Flag yourself as online. You will receive crafting requests
-!offline                | Flag yourself as offline
-!accept                 | Accept a crafting request
+!shop                       | Lists your shop
+!shopitems                  | List all items you can add to your shop
+!shopadd <item>             | Add an item you can craft
+!shopremove <item>          | Remove an item from shop
+!shoplocation <city>        | Set what city you are based out of
+!shoponline                 | Flag yourself as online. You will receive crafting requests
+!shopoffline                | Flag yourself as offline
 
 For Shoppers
 -----------------------------------------------------
-!craft <item>           | Connect with someone that can craft
+!craft <city> <item>           | Connect with someone that can craft
+
+Item Format: <tier> <item>
+
+Examples
+----------
+T4 Mage Helmet
+T5.1 Knight Boots
+T3 Warbow
 
 ```
 """
@@ -89,6 +97,14 @@ async def on_message(message):
         print("Shop | " + str(message.author) + " | " + message.content)
         await shop_get(client, message, message.content.split("!shop")[1])
 
+    if message.content == '!shoponline':
+        print("Shop | " + str(message.author) + " | " + message.content)
+        await shop_online(client, message, 1)
+
+    if message.content == '!shopoffline':
+        print("Shop | " + str(message.author) + " | " + message.content)
+        await shop_online(client, message, 0)
+
     if message.content.startswith('!shopadd '):
         print("Shop Add | " + str(message.author) + " | " + message.content)
         await shop_add(client, message, message.content.split("!shopadd ")[1])
@@ -97,8 +113,11 @@ async def on_message(message):
         print("Shop Remove | " + str(message.author) + " | " + message.content)
         await shop_remove(client, message, message.content.split("!shopremove ")[1])
 
-    if message.content.startswith('!shopsetlocation '):
+    if message.content.startswith('!shoplocation '):
         print("Shop Remove | " + str(message.author) + " | " + message.content)
-        await shop_location_set(client, message, message.content.split("!shopsetlocation ")[1])
+        await shop_location_set(client, message, message.content.split("!shoplocation ")[1])
+    if message.content.startswith('!craft '):
+        print("Craft | " + str(message.author) + " | " + message.content)
+        await craft_get_crafters(client, message, message.content.split("!craft ")[1])
 
 client.run(config["discord_token"])
