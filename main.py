@@ -4,6 +4,7 @@ import json
 
 from commands.utc import utc
 from commands.wiki import wiki
+from CraftBot.commands.shop import *
 
 BOT_ABOUT = """
 ```
@@ -23,6 +24,22 @@ AlbiBot by Reznok#1688 (Discord)
 !utc                    | Display UTC Time
 !wiki <search>          | Get Wiki Page For an Item
 !about                  | About AlbiBot
+
+For Crafters
+----------------------------------------------------
+!shop                   | Lists your shop
+!shopitems              | List all items you can add to your shop
+!shopadd <item>         | Add an item you can craft
+!shopremove <item>      | Remove an item from shop
+!shoplocation <city>    | Set what city you are based out of
+!online                 | Flag yourself as online. You will receive crafting requests
+!offline                | Flag yourself as offline
+!accept                 | Accept a crafting request
+
+For Shoppers
+-----------------------------------------------------
+!craft <item>           | Connect with someone that can craft
+
 ```
 """
 
@@ -67,5 +84,21 @@ async def on_message(message):
     if message.content.startswith('!help'):
         print("Help | " + str(message.author) + " | " + message.content)
         await client.send_message(message.channel, BOT_HELP)
+
+    if message.content == '!shop':
+        print("Shop | " + str(message.author) + " | " + message.content)
+        await shop_get(client, message, message.content.split("!shop")[1])
+
+    if message.content.startswith('!shopadd '):
+        print("Shop Add | " + str(message.author) + " | " + message.content)
+        await shop_add(client, message, message.content.split("!shopadd ")[1])
+
+    if message.content.startswith('!shopremove '):
+        print("Shop Remove | " + str(message.author) + " | " + message.content)
+        await shop_remove(client, message, message.content.split("!shopremove ")[1])
+
+    if message.content.startswith('!shopsetlocation '):
+        print("Shop Remove | " + str(message.author) + " | " + message.content)
+        await shop_location_set(client, message, message.content.split("!shopsetlocation ")[1])
 
 client.run(config["discord_token"])
